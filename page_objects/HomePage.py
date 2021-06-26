@@ -9,6 +9,6 @@ class HomePage:
     def __init__(self,driver):
         self.driver = driver
 
-    def shop_link(self):
+    def find_shop_link(self):
         return self.driver.find_element(*HomePage.shop_link)
         #driver.find_element_by_css_selector("a[href*='shop']").

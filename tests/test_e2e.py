@@ -6,6 +6,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 from page_objects.CheckoutPage import CheckoutPage
+from page_objects.ConfirmPage import ConfirmationPage
 from page_objects.HomePage import HomePage
 from page_objects.ShopPage import ShopPage
 from utilities.BaseClass import BaseClass
@@ -17,7 +18,7 @@ class TestMod1(BaseClass):
 
         # Click on the shop link top level menu
         home_page = HomePage(self.driver)
-        home_page.shop_link().click()
+        home_page.find_shop_link().click()
 
         # Get the list of card titles present it shop page
         shop_page = ShopPage(self.driver)
@@ -40,14 +41,25 @@ class TestMod1(BaseClass):
         checkout_page = CheckoutPage(self.driver)
         checkout_page.find_checkout_btn().click()
 
+        # Now user will on confirmation page, where he needs to enter shipping location.
+        # Enter the keyword 'ind' to load the India location in the text box
+        confirmation_page = ConfirmationPage(self.driver)
+        confirmation_page.find_location_txt_bx().send_keys("ind")
 
-        self.driver.find_element_by_id("country").send_keys("ind")
+        # wait for the drop down list option to appear
+        element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(confirmation_page.list_option_india))
+        # click on the drop down list option India
+        confirmation_page.find_list_option_india().click()
 
-        element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.LINK_TEXT, "India")))
-        self.driver.find_element_by_link_text("India").click()
-        self.driver.find_element_by_xpath("//div[@class='checkbox checkbox-primary']").click()
-        self.driver.find_element_by_css_selector("[type='submit']").click()
-        text_match = self.driver.find_element_by_css_selector("[class*='alert-success']").text
+        # click on the checkbox for terms & conditions
+        confirmation_page.find_tnc_checkbox().click()
 
+        # Click on the Purchase button
+        confirmation_page.find_purchase_btn().click()
+
+        # Read Purchase success message
+        text_match = confirmation_page.find_success_msg().text
+
+        # Asserting if Success Message matches the expected Text
         assert("Success! Thank you!" in text_match)
 

@@ -10,7 +10,7 @@ class CheckoutPage:
         self.driver = driver
 
     def find_checkout_btn(self):
-        return self.driver.find_elements(*CheckoutPage.checkout_btn)
+        return self.driver.find_element(*CheckoutPage.checkout_btn)
 
 
 

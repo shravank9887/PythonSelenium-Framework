@@ -28,5 +28,5 @@ class ShopPage:
         return self.driver.find_elements(*ShopPage.card_footer_add_btn)
 
     def find_checkout_btn(self):
-        return self.driver.find_elements(*ShopPage.checkout_btn)
+        return self.driver.find_element(*ShopPage.checkout_btn)
 
