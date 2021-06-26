@@ -35,7 +35,7 @@ class TestMod1(BaseClass):
         # Click on the Checkout Button on top right corner of shop page
         shop_page.find_checkout_btn().click()
 
-
+        #test commits
         self.driver.find_element_by_xpath("//button[@class='btn btn-success']").click()
         self.driver.find_element_by_id("country").send_keys("ind")
 
