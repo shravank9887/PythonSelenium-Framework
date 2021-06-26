@@ -49,7 +49,8 @@ class TestMod1(BaseClass):
         confirmation_page.find_location_txt_bx().send_keys("ind")
 
         # wait for the drop down list option to appear
-        element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(confirmation_page.list_option_india))
+        self.verify_link_presence("India")
+
         # click on the drop down list option India
         confirmation_page.find_list_option_india().click()
 
