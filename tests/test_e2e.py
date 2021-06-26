@@ -16,12 +16,14 @@ class TestMod1(BaseClass):
 
     def test_tc1_place_order_blackberry(self):
 
-        # Click on the shop link top level menu
+        # Create Homepage object
         home_page = HomePage(self.driver)
-        home_page.find_shop_link().click()
 
-        # Get the list of card titles present it shop page
-        shop_page = ShopPage(self.driver)
+        # Click on the shop link top level menu
+        # Returns the shop page object, where next interaction happens
+        shop_page = home_page.get_shop_page()
+
+        # Get the list of card titles present in shop page
         cards = shop_page.find_card_titles()
 
         # Find the Item card with Blackberry title and click the add button on card footer
@@ -34,16 +36,16 @@ class TestMod1(BaseClass):
                 shop_page.find_card_footer_add_btn()[i].click()
 
         # Click on the Checkout Button on top right corner of shop page
-        shop_page.find_checkout_btn().click()
+        # this will open the checkout page and return checkout_page object
+        checkout_page = shop_page.get_checkout_page()
 
         # After above step, user will be navigated from shop page to checkout page
         # Click checkout button in the Checkout page
-        checkout_page = CheckoutPage(self.driver)
-        checkout_page.find_checkout_btn().click()
+        # Now the user will be navigate to Confirmation page.
+        confirmation_page = checkout_page.get_confirmation_page()
 
         # Now user will on confirmation page, where he needs to enter shipping location.
         # Enter the keyword 'ind' to load the India location in the text box
-        confirmation_page = ConfirmationPage(self.driver)
         confirmation_page.find_location_txt_bx().send_keys("ind")
 
         # wait for the drop down list option to appear

@@ -4,6 +4,8 @@
 #
 from selenium.webdriver.common.by import By
 
+from page_objects.CheckoutPage import CheckoutPage
+
 
 class ShopPage:
 
@@ -27,6 +29,10 @@ class ShopPage:
     def find_card_footer_add_btn(self):
         return self.driver.find_elements(*ShopPage.card_footer_add_btn)
 
-    def find_checkout_btn(self):
-        return self.driver.find_element(*ShopPage.checkout_btn)
+    # Clicks on the Checkout btn on top right corner
+    # Returns the Checkout page object, where next interaction happens
+    def get_checkout_page(self):
+        self.driver.find_element(*ShopPage.checkout_btn).click()
+        checkout_page = CheckoutPage(self.driver)
+        return checkout_page
 
