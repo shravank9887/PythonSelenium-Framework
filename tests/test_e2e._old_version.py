@@ -7,34 +7,28 @@ from selenium.webdriver.support import expected_conditions as EC
 
 from page_objects.CheckoutPage import CheckoutPage
 from page_objects.HomePage import HomePage
-from page_objects.ShopPage import ShopPage
 from utilities.BaseClass import BaseClass
 
 
 class TestMod1(BaseClass):
 
-    def test_tc1_place_order_blackberry(self):
-
-        # Click on the shop link top level menu
+    def test_TC1(self):
         home_page = HomePage(self.driver)
         home_page.shop_link().click()
+        #self.driver.find_element_by_css_selector("a[href*='shop']").click()
 
-        # Get the list of card titles present it shop page
-        shop_page = ShopPage(self.driver)
-        cards = shop_page.find_card_titles()
-
-        # Find the Item card with Blackberry title and click the add button on card footer
+        checkout_page = CheckoutPage(self.driver)
+        cards = checkout_page.get_card_titles()
+        #cards = self.driver.find_elements_by_css_selector(".card-title a")
         i = -1
         for card in cards:
             i = i + 1
-            card_text = card.text
-            print(card_text)
-            if card_text == "Blackberry":
-                shop_page.find_card_footer_add_btn()[i].click()
+            cardText = card.text
+            print(cardText)
+            if cardText == "Blackberry":
+                checkout_page.get_card_footer_add_btn()[i].click()
 
-        # Click on the Checkout Button on top right corner of shop page
-        shop_page.find_checkout_btn().click()
-
+        self.driver.find_element_by_css_selector("a[class*='btn-primary']").click()
 
         self.driver.find_element_by_xpath("//button[@class='btn btn-success']").click()
         self.driver.find_element_by_id("country").send_keys("ind")
@@ -43,7 +37,7 @@ class TestMod1(BaseClass):
         self.driver.find_element_by_link_text("India").click()
         self.driver.find_element_by_xpath("//div[@class='checkbox checkbox-primary']").click()
         self.driver.find_element_by_css_selector("[type='submit']").click()
-        text_match = self.driver.find_element_by_css_selector("[class*='alert-success']").text
+        textMatch = self.driver.find_element_by_css_selector("[class*='alert-success']").text
 
-        assert("Success! Thank you!" in text_match)
+        assert("Success! Thank you!" in textMatch)
 
